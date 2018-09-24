@@ -48,4 +48,3 @@ TODO Cloudcraft diagram
 | vpc_name              | VPC Name                                                       | string |     -      |   yes    |
 
 *Based on [standard module structure](https://www.terraform.io/docs/modules/create.html#standard-module-structure) guidelines*
-

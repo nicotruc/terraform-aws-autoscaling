@@ -79,7 +79,7 @@ resource aws_lb_target_group_attachment "api_http" {
 
 resource aws_lb_target_group_attachment "api_netdata" {
   count            = "${var.app_count}"
-  target_group_arn = "${aws_lb_target_group.alb_tg_http.arn}"
+  target_group_arn = "${aws_lb_target_group.alb_tg_netdata.arn}"
   target_id        = "${element(aws_instance.api.*.id, count.index)}"
   port             = 19999
 }

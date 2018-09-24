@@ -64,7 +64,6 @@ resource "aws_lb_target_group" "alb_tg_http" {
 
   health_check {
     path                = "/heartbeat"
-    port                = "8080"       # Traefik dashboard port
     healthy_threshold   = 2
     unhealthy_threshold = 4
     interval            = 15
@@ -79,8 +78,7 @@ resource "aws_lb_target_group" "alb_tg_netdata" {
   vpc_id   = "${module.discovery.vpc_id}"
 
   health_check {
-    path                = "/heartbeat"
-    port                = "8080"       # Traefik dashboard port
+    path                = "/"
     healthy_threshold   = 2
     unhealthy_threshold = 4
     interval            = 15

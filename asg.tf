@@ -70,9 +70,16 @@ resource "aws_instance" "api" {
     map("Name", format("%s-%02d", var.app_name, count.index)))}"
 }
 
-resource aws_lb_target_group_attachment "api" {
+resource aws_lb_target_group_attachment "api_http" {
   count            = "${var.app_count}"
   target_group_arn = "${aws_lb_target_group.alb_tg_http.arn}"
   target_id        = "${element(aws_instance.api.*.id, count.index)}"
   port             = 8080
+}
+
+resource aws_lb_target_group_attachment "api_netdata" {
+  count            = "${var.app_count}"
+  target_group_arn = "${aws_lb_target_group.alb_tg_http.arn}"
+  target_id        = "${element(aws_instance.api.*.id, count.index)}"
+  port             = 19999
 }

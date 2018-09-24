@@ -37,6 +37,5 @@ variable "app_root_block_device" {
     volume_type = "gp2"
     volume_size = 20
   }
-
   description = "An EBS block device block definition to use by the application"
 }

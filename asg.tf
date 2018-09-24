@@ -17,7 +17,7 @@ resource "aws_security_group" "api" {
   }
 }
 
-# Configuration of the firewall for a public ALB
+# Configuration of the firewall - Instances <-> ALB
 resource "aws_security_group_rule" "api_tcp_8080_alb" {
   type                     = "ingress"
   from_port                = 8080
@@ -25,6 +25,34 @@ resource "aws_security_group_rule" "api_tcp_8080_alb" {
   protocol                 = "tcp"
   source_security_group_id = "${aws_security_group.alb.id}"
   security_group_id        = "${aws_security_group.api.id}"
+}
+
+resource "aws_security_group_rule" "api_tcp_19999_alb" {
+  type                     = "ingress"
+  from_port                = 19999
+  to_port                  = 19999
+  protocol                 = "tcp"
+  source_security_group_id = "${aws_security_group.alb.id}"
+  security_group_id        = "${aws_security_group.api.id}"
+}
+
+# Configuration of the firewall - Instances <-> MyIp (Debugging purposes)
+resource "aws_security_group_rule" "api_tcp_8080_myip" {
+  type              = "ingress"
+  from_port         = 8080
+  to_port           = 8080
+  protocol          = "tcp"
+  cidr_blocks       = ["${trimspace(data.http.whatismyip.body)}/32"]
+  security_group_id = "${aws_security_group.api.id}"
+}
+
+resource "aws_security_group_rule" "api_tcp_19999_myip" {
+  type              = "ingress"
+  from_port         = 19999
+  to_port           = 19999
+  protocol          = "tcp"
+  cidr_blocks       = ["${trimspace(data.http.whatismyip.body)}/32"]
+  security_group_id = "${aws_security_group.api.id}"
 }
 
 ######################################################################

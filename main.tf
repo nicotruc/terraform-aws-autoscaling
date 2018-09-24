@@ -29,3 +29,7 @@ locals {
   app_subnets = "${module.discovery.public_subnets}"
   ops_sg      = "${module.discovery.security_groups_json["ops"]}"
 }
+
+data "http" "whatismyip" {
+  url = "http://icanhazip.com"
+}
